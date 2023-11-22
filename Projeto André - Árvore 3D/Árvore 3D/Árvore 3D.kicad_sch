@@ -6,7 +6,7 @@
 
   (title_block
     (title "Projeto Natal 2023 - Árvore de Natal 3D")
-    (date "2023-11-20")
+    (date "2023-11-21")
     (rev "01")
     (company "Franzininho / Mechatronix Lab")
     (comment 1 "Eng. André A. M. Araújo")
@@ -2739,7 +2739,7 @@
     (property "Value" "SW_Push" (at 110.49 106.68 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_6x6mm_H9.5mm" (at 104.14 105.41 0)
+    (property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ" (at 104.14 105.41 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "https://www.lcsc.com/product-detail/Tactile-Switches_Made-in-China-C23873_C23873.html" (at 104.14 105.41 0)

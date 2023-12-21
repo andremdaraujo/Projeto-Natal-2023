@@ -13,9 +13,9 @@ volatile uint8_t button_flag = 0;   // Flag for External Interrupt (configured, 
 void APP_Init(void)
 {
 
-    volatile uint32_t dt = 1000;
+    volatile uint32_t dt = 250;
 
-    uint8_t i = 0;
+    uint8_t mode = 0;
 
     APP_GPIO_Init();    // GPIO initialization
 
@@ -25,59 +25,76 @@ void APP_Init(void)
         {
             button_flag = 0;
 
-            dt = 2000;
+            mode++;
+
+            if (mode == 2)
+            {
+                // Sleep
+
+                LED_AllOff();
+
+                APP_GPIO_DeInit();  // Disable outputs and sets GPIO for low power mode,
+                                    // except for PD1 (interrupt for waking up the MCU)
+
+                APP_Standby();      // Enter Standby Mode
+
+                APP_GPIO_Init();            // After wake up, initialize GPIO again
+                SystemCoreClockUpdate();    // Also reinitialize Clock
+                Delay_Init();               // and delay
+
+                mode = 0;
+            }
         }
 
-        for (i = 0; i < 2; i++)
+        switch (mode)
         {
-            LED_RedOn();
-            Delay_Ms(dt);
+            case 0:
+                LED_RedOn();
+                Delay_Ms(dt);
 
-            LED_OrangeOn();
-            Delay_Ms(dt);
+                LED_OrangeOn();
+                Delay_Ms(dt);
 
-            LED_BlueOn();
-            Delay_Ms(dt);
+                LED_BlueOn();
+                Delay_Ms(dt);
 
-            LED_YellowOn();
-            Delay_Ms(dt);
+                LED_YellowOn();
+                Delay_Ms(dt);
 
-            LED_RedOff();
-            Delay_Ms(dt);
+                LED_RedOff();
+                Delay_Ms(dt);
 
-            LED_OrangeOff();
-            Delay_Ms(dt);
+                LED_OrangeOff();
+                Delay_Ms(dt);
 
-            LED_BlueOff();
-            Delay_Ms(dt);
+                LED_BlueOff();
+                Delay_Ms(dt);
 
-            LED_YellowOff();
-            Delay_Ms(dt);
+                LED_YellowOff();
+                Delay_Ms(dt);
+
+                break;
+
+            case 1:
+               LED_BlueOff();
+               LED_RedOn();
+               Delay_Ms(dt);
+
+               LED_YellowOff();
+               LED_OrangeOn();
+               Delay_Ms(dt);
+
+               LED_RedOff();
+               LED_BlueOn();
+               Delay_Ms(dt);
+
+               LED_OrangeOff();
+               LED_YellowOn();
+               Delay_Ms(dt);
+
+               break;
         }
-
-        for (i = 0; i < 4; i++)
-        {
-            LED_BlueOff();
-            LED_RedOn();
-            Delay_Ms(dt);
-
-            LED_YellowOff();
-            LED_OrangeOn();
-            Delay_Ms(dt);
-
-            LED_RedOff();
-            LED_BlueOn();
-            Delay_Ms(dt);
-
-            LED_OrangeOff();
-            LED_YellowOn();
-            Delay_Ms(dt);
-        }
-
-        LED_AllOff();
     }
-
-
 
 //    APP_GPIO_DeInit();  // Disable outputs and sets GPIO for low power mode,
 //                        // except for PD0 (interrupt for waking up the MCU)
@@ -144,6 +161,8 @@ void APP_GPIO_Init(void)
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
+    EXTI_ClearITPendingBit(EXTI_Line1);
+
 //    RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO | RCC_APB2Periph_GPIOD, ENABLE);
 //
 //    // Set Pin 0 as input, pull-up
@@ -196,7 +215,7 @@ void EXTI7_0_IRQHandler(void)    // External Interrupt (configured, but unused i
     if(EXTI_GetITStatus(EXTI_Line1)!=RESET)
     {
         button_flag = 1;                        // Sets flag to be handled in main loop
-        Delay_Ms(50);                           // Delay for simple debounce
+        Delay_Ms(100);                           // Delay for simple debounce
         EXTI_ClearITPendingBit(EXTI_Line1);     // Clear Flag
     }
 }

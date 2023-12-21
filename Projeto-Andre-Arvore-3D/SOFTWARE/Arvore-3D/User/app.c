@@ -6,13 +6,16 @@
  */
 
 #include "app.h"
+#include "led.h"
 
 volatile uint8_t button_flag = 0;   // Flag for External Interrupt (configured, but unused in this example)
 
 void APP_Init(void)
 {
 
-    uint8_t dt = 50;
+    volatile uint32_t dt = 1000;
+
+    uint8_t i = 0;
 
     APP_GPIO_Init();    // GPIO initialization
 
@@ -22,30 +25,68 @@ void APP_Init(void)
         {
             button_flag = 0;
 
-            dt = 250;
+            dt = 2000;
         }
 
-        GPIO_Write(GPIOA, GPIO_Pin_1 | GPIO_Pin_2);
-        GPIO_Write(GPIOC, 0xFF);
-        GPIO_Write(GPIOD, GPIO_Pin_0 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6);
-        Delay_Ms(dt);
+        for (i = 0; i < 2; i++)
+        {
+            LED_RedOn();
+            Delay_Ms(dt);
 
-        GPIO_Write(GPIOA, GPIO_Pin_1 | GPIO_Pin_2);
-        GPIO_Write(GPIOC, 0x00);
-        GPIO_Write(GPIOD, 0x00);
-        Delay_Ms(dt);
+            LED_OrangeOn();
+            Delay_Ms(dt);
+
+            LED_BlueOn();
+            Delay_Ms(dt);
+
+            LED_YellowOn();
+            Delay_Ms(dt);
+
+            LED_RedOff();
+            Delay_Ms(dt);
+
+            LED_OrangeOff();
+            Delay_Ms(dt);
+
+            LED_BlueOff();
+            Delay_Ms(dt);
+
+            LED_YellowOff();
+            Delay_Ms(dt);
+        }
+
+        for (i = 0; i < 4; i++)
+        {
+            LED_BlueOff();
+            LED_RedOn();
+            Delay_Ms(dt);
+
+            LED_YellowOff();
+            LED_OrangeOn();
+            Delay_Ms(dt);
+
+            LED_RedOff();
+            LED_BlueOn();
+            Delay_Ms(dt);
+
+            LED_OrangeOff();
+            LED_YellowOn();
+            Delay_Ms(dt);
+        }
+
+        LED_AllOff();
     }
 
 
 
-    APP_GPIO_DeInit();  // Disable outputs and sets GPIO for low power mode,
-                        // except for PD0 (interrupt for waking up the MCU)
-
-    APP_Standby();      // Enter Standby Mode
-
-    APP_GPIO_Init();            // After wake up, initialize GPIO again
-    SystemCoreClockUpdate();    // Also reinitialize Clock
-    Delay_Init();               // and delay
+//    APP_GPIO_DeInit();  // Disable outputs and sets GPIO for low power mode,
+//                        // except for PD0 (interrupt for waking up the MCU)
+//
+//    APP_Standby();      // Enter Standby Mode
+//
+//    APP_GPIO_Init();            // After wake up, initialize GPIO again
+//    SystemCoreClockUpdate();    // Also reinitialize Clock
+//    Delay_Init();               // and delay
 }
 
 void APP_GPIO_Init(void)
@@ -154,7 +195,8 @@ void EXTI7_0_IRQHandler(void)    // External Interrupt (configured, but unused i
 {
     if(EXTI_GetITStatus(EXTI_Line1)!=RESET)
     {
-        button_flag = 1;
-        EXTI_ClearITPendingBit(EXTI_Line1);             // Clear Flag
+        button_flag = 1;                        // Sets flag to be handled in main loop
+        Delay_Ms(50);                           // Delay for simple debounce
+        EXTI_ClearITPendingBit(EXTI_Line1);     // Clear Flag
     }
 }

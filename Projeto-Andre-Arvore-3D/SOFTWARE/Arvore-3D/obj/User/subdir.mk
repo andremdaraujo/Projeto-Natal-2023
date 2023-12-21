@@ -7,18 +7,21 @@
 C_SRCS += \
 ../User/app.c \
 ../User/ch32v00x_it.c \
+../User/led.c \
 ../User/main.c \
 ../User/system_ch32v00x.c 
 
 OBJS += \
 ./User/app.o \
 ./User/ch32v00x_it.o \
+./User/led.o \
 ./User/main.o \
 ./User/system_ch32v00x.o 
 
 C_DEPS += \
 ./User/app.d \
 ./User/ch32v00x_it.d \
+./User/led.d \
 ./User/main.d \
 ./User/system_ch32v00x.d 
 

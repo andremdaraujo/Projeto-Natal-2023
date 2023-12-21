@@ -1,4 +1,4 @@
-User/app.o: ../User/app.c ../User/app.h \
+User/led.o: ../User/led.c ../User/led.h \
  C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x.h \
  C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Core/core_riscv.h \
  C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\User/system_ch32v00x.h \
@@ -21,10 +21,9 @@ User/app.o: ../User/app.c ../User/app.h \
  C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x_usart.h \
  C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x_wwdg.h \
  C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x_opa.h \
- C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x.h \
- ../User/led.h
+ C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x.h
 
-../User/app.h:
+../User/led.h:
 
 C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x.h:
 
@@ -71,5 +70,3 @@ C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWAR
 C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x_opa.h:
 
 C:\Andre\PROJECTS\FRANZININHO\Projeto-Natal-2023\Projeto-Andre-Arvore-3D\SOFTWARE\Arvore-3D\Peripheral\inc/ch32v00x.h:
-
-../User/led.h:

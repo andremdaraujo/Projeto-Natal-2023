@@ -10,13 +10,17 @@
 
 #include <ch32v00x.h>
 
-extern volatile uint8_t button_flag;
+#define APP_TIMEOUT        500
+#define APP_MODE_REPEATS    50
 
-void APP_Init(void);
+extern volatile uint8_t flag_button;
+
+void APP_Run(void);
 void APP_GPIO_Init(void);
 void APP_GPIO_DeInit(void);
 
 void APP_Standby(void);
+void APP_WakeUp(void);
 
 void EXTI7_0_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
